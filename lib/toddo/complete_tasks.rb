@@ -9,15 +9,11 @@ module Toddo
 		end
 
 		def remove(order)
-			if exists?(order)
+			if order.between?(1, @tasks.length)
 				@tasks.delete_at(order - 1)
 				return CompleteTasks.new(@tasks)
 			end
 			raise RangeError, format('Order %{order} does not exist', order: order)
-		end
-
-		def exists?(order)
-			order.between?(1, @tasks.length)
 		end
 
 		def to_a
