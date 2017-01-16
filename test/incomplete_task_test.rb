@@ -13,7 +13,7 @@ class IncompleteTaskTest < Minitest::Test
 		assert_equal(exception.to_s, 'Order must be numeric')
 	end
 
-	def test_removing_trailing_spaces
+	def test_removing_trailing_spaces_from_order
 		assert_equal('1. Indent', Toddo::IncompleteTask.new(' 1 ', 'Indent').to_s)
 	end
 
@@ -24,7 +24,7 @@ class IncompleteTaskTest < Minitest::Test
 		assert_equal(exception.to_s, 'Order must be numeric')
 	end
 
-	def test_order_starting_from_one
+	def test_natural_ordering
 		assert_equal('1. Indent', Toddo::IncompleteTask.new(0, 'Indent').to_s)
 		assert_equal('1. Indent', Toddo::IncompleteTask.new(-1, 'Indent').to_s)
 		assert_equal('10. Indent', Toddo::IncompleteTask.new(10, 'Indent').to_s)

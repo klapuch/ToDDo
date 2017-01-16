@@ -21,7 +21,7 @@ class CompleteTasksTest < Minitest::Test
 		assert_equal('bur', tasks[2])
 	end
 
-	def test_removing_edges
+	def test_removing_in_natural_order
 		assert_nothing_raised do
 			Toddo::CompleteTasks.new(['foo', 'bar', 'baz', 'bur']).remove(4)
 		end
@@ -30,18 +30,21 @@ class CompleteTasksTest < Minitest::Test
 		end
 	end
 
-	def test_throwin_on_removing_by_unknown_order
-		overflow = assert_raises RangeError do
-			Toddo::CompleteTasks.new(['foo', 'bar', 'baz', 'bur']).remove(5)
-		end
-		underflow = assert_raises RangeError do
+	def test_throwing_on_removing_by_unnatural_order
+		end_exception = assert_raises RangeError do
 			Toddo::CompleteTasks.new(['foo', 'bar', 'baz', 'bur']).remove(-1)
 		end
-		zero = assert_raises RangeError do
+		zero_exception = assert_raises RangeError do
 			Toddo::CompleteTasks.new(['foo', 'bar', 'baz', 'bur']).remove(0)
 		end
-		assert_equal('Order 5 does not exist', overflow.to_s)
-		assert_equal('Order -1 does not exist', underflow.to_s)
-		assert_equal('Order 0 does not exist', zero.to_s)
+		assert_equal('Order -1 does not exist', end_exception.to_s)
+		assert_equal('Order 0 does not exist', zero_exception.to_s)
+	end
+
+	def test_throwing_on_removing_over_limit
+		overflow_exception = assert_raises RangeError do
+			Toddo::CompleteTasks.new(['foo', 'bar', 'baz', 'bur']).remove(5)
+		end
+		assert_equal('Order 5 does not exist', overflow_exception.to_s)
 	end
 end
