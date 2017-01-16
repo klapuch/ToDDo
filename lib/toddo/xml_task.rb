@@ -11,7 +11,7 @@ module Toddo
 
 		def attributes
 			[attribute('order', @order), attribute('content', @content)]
-				.reject { |attribute| attribute.nil? }
+				.reject(&:nil?)
 				.join(' ')
 		end
 
