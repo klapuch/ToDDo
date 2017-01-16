@@ -16,9 +16,7 @@ module Toddo
 		end
 
 		def attribute(name, value)
-			if name && value
-				format('%{name}="%{value}"', name: name, value: value)
-			end
+			return format('%s="%s"', name, value) if name && value
 		end
 
 		private :attribute, :attributes
